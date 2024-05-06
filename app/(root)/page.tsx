@@ -5,7 +5,7 @@ const TransformationsPage = () => {
   return (
     <div>
       <p>HOME</p>
-      <UserButton afterSignOutUrl='/'/>
+      {/* <UserButton afterSignOutUrl='/'/> */}
     </div>
   )
 }
