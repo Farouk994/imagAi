@@ -2,7 +2,8 @@
 
 import mongoose, { mongo, Mongoose } from "mongoose";
 
-const mongo_url = process.env.MONGO_URL;
+const mongo_url = process.env.MONGODB_URI;
+console.log('mongo_url ===>',mongo_url)
 
 // database is connected only once
 // each request is handled by the same connection

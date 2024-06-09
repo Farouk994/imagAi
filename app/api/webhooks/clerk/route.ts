@@ -81,6 +81,8 @@ export async function POST(req: Request) {
       });
     }
 
+    console.log('new USER ======================>', newUser)
+
     return NextResponse.json({ message: "OK", user: newUser });
   }
 
