@@ -9,22 +9,22 @@ import { redirect } from "next/navigation";
 const AddTransformationPageType = async ({
   params: { type },
 }: SearchParamProps) => {
-  // const { userId } = auth();
+  const { userId } = auth();
   const transformation = transformationTypes[type];
 
-  // if (!userId) redirect("/sign-in");
+  if (!userId) redirect("/sign-in");
 
   // Get user from DB
-  // const user = await getUserById(userId);
+  const user = await getUserById(userId);
   return (
     <div>
       <Header title={transformation.title} subtitle={transformation.subTitle} />
-      {/* <TransformationForm
+      <TransformationForm
         action="Add"
         userId={user._id}
-        type={transformation.type as TransformationTypeKey}?
+        type={transformation.type as TransformationTypeKey}
         creditBalance={user.creditBalance}
-      /> */}
+      />
     </div>
   );
 };
