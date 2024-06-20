@@ -47,12 +47,17 @@ const TransformationForm = ({
   userId,
   type,
   creditBalance,
+  config = null,
 }: TransformationFormProps) => {
   const transformationType = transformationTypes[type];
 
   const [image, setImage] = useState(data);
   const [newTransformation, setNewTransformation] =
     useState<Transformations | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransforming, setIsTransforming] = useState(false);
+  const [transformationConfig, setIsTransformationConfig] = useState(false);
+  useState(config);
 
   const initialValues =
     data && action === "Update"
@@ -79,7 +84,7 @@ const TransformationForm = ({
   }
 
   const onSelectFieldHandler =
-    (value: string) => (onChangeField: (value: string) => void) => {};
+    (value: string, field: string) => (onChangeField: (value: string) => void) => {};
 
   const onInputChangeHandler = (
     fieldName: string,
@@ -87,6 +92,8 @@ const TransformationForm = ({
     type: string,
     onChangeField: (value: string) => void
   ) => {};
+
+  const onTransformHandler = () => {};
 
   return (
     <div>
@@ -176,10 +183,27 @@ const TransformationForm = ({
             />
           )}
 
-          <Button type="submit" className="submit-button capitalize">Submit</Button>
+          <div className="flex flex-col gap-4">
+            <Button
+              type="button"
+              className="submit-button capitalize"
+              disabled={isTransforming || newTransformation === null}
+              onClick={onTransformHandler}
+            >
+              {isTransforming ? "Transforming..." : "Apply Transformation"}
+            </Button>
+            <Button
+              type="submit"
+              className="submit-button capitalize"
+              disabled={isSubmitting}
+              onClick={onTransformHandler}
+            >
+              {isSubmitting ? "Submitting..." : "Save"}
+            </Button>
+          </div>
         </form>
       </Form>
-    </div>
+  </div>
   );
 };
 

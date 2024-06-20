@@ -17,7 +17,7 @@ const AddTransformationPageType = async ({
   // Get user from DB
   const user = await getUserById(userId);
   return (
-    <div>
+    <section className="mt-10">
       <Header title={transformation.title} subtitle={transformation.subTitle} />
       <TransformationForm
         action="Add"
@@ -25,7 +25,7 @@ const AddTransformationPageType = async ({
         type={transformation.type as TransformationTypeKey}
         creditBalance={user.creditBalance}
       />
-    </div>
+    </section>
   );
 };
 
