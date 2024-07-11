@@ -33,6 +33,7 @@ import {
 import { CustomField } from "./CustomField";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
+import MediaUploader from "./MediaUploader";
 
 // specify different form validations
 export const formSchema = z.object({
@@ -60,7 +61,7 @@ const TransformationForm = ({
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setIsTransformationConfig] = useState(false);
   // update state without blocking UI
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
   useState(config);
 
   const initialValues =
@@ -87,20 +88,22 @@ const TransformationForm = ({
     console.log(values);
   }
 
-  const onSelectFieldHandler =
-    (value: string, onChangeField: (value: string) => void) => {
-      const imageSize = aspectRatioOptions[value as AspectRatioKey];
+  const onSelectFieldHandler = (
+    value: string,
+    onChangeField: (value: string) => void
+  ) => {
+    const imageSize = aspectRatioOptions[value as AspectRatioKey];
 
-      setImage((prevState: any) => ({
-        ...prevState,
-        aspectRatio: imageSize.aspectRatio,
-        width: imageSize.width,
-        height: imageSize.height
-      }))
-      setNewTransformation(transformationType.config);
+    setImage((prevState: any) => ({
+      ...prevState,
+      aspectRatio: imageSize.aspectRatio,
+      width: imageSize.width,
+      height: imageSize.height,
+    }));
+    setNewTransformation(transformationType.config);
 
-      return onChangeField(value)
-    };
+    return onChangeField(value);
+  };
 
   const onInputChangeHandler = (
     fieldName: string,
@@ -108,34 +111,34 @@ const TransformationForm = ({
     type: string,
     onChangeField: (value: string) => void
   ) => {
-    // set timer to limit function calls to server 
-    debounce(()=>{
+    // set timer to limit function calls to server
+    debounce(() => {
       setNewTransformation((prevState: any) => ({
         ...prevState,
         [type]: {
           ...prevState?.[type],
-          [fieldName === 'prompt' ? 'prompt' : 'to']: value
-        }
-      }))
-      return onChangeField(value)
-    },1000);
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
+        },
+      }));
+      return onChangeField(value);
+    }, 1000);
   };
 
   // image handler
   // :TODO: Return to update credits
   const onTransformHandler = async () => {
-   setIsTransforming(true);
-// merges all keys both objects to ensure both 
-// of them end up in new obj - transformationConfig 
-   setIsTransformationConfig(
-    deepMergeObjects(newTransformation, transformationConfig)
-   )
+    setIsTransforming(true);
+    // merges all keys both objects to ensure both
+    // of them end up in new obj - transformationConfig
+    setIsTransformationConfig(
+      deepMergeObjects(newTransformation, transformationConfig)
+    );
 
-   setNewTransformation(null);
+    setNewTransformation(null);
 
-   startTransition(async () => {
-    // await updateCredits(userId, creditFee)
-   })
+    startTransition(async () => {
+      // await updateCredits(userId, creditFee)
+    });
   };
 
   return (
@@ -226,6 +229,23 @@ const TransformationForm = ({
             />
           )}
 
+          <div className="media-uploader-field">
+            <CustomField
+              control={form.control}
+              name="publicId"
+              className="flex size-full flex-col"
+              render={({ field }) => (
+                <MediaUploader
+                  onValueChange={field.change}
+                  setImage={field.value}
+                  publicId={field.value}
+                  image={image}
+                  type={type}
+                />
+              )}
+            />
+          </div>
+
           <div className="flex flex-col gap-4">
             <Button
               type="button"
@@ -246,7 +266,7 @@ const TransformationForm = ({
           </div>
         </form>
       </Form>
-  </div>
+    </div>
   );
 };
 
