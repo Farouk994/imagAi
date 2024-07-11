@@ -3,7 +3,7 @@
 import mongoose, { mongo, Mongoose } from "mongoose";
 
 const mongo_url = process.env.MONGODB_URI;
-console.log('mongo_url ===>',mongo_url)
+console.log('mongo_url ===>',mongo_url ? 'Connected...' : 'failed to connect')
 
 // database is connected only once
 // each request is handled by the same connection
