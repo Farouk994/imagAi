@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -31,8 +31,10 @@ import {
   transformationTypes,
 } from "@/constants";
 import { CustomField } from "./CustomField";
-import { AspectRatioKey, debounce } from "@/lib/utils";
+import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
+import { updateCredits } from "@/lib/actions/user.actions";
 
+// specify different form validations
 export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
@@ -57,6 +59,8 @@ const TransformationForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setIsTransformationConfig] = useState(false);
+  // update state without blocking UI
+  const [isPending, startTransition] = useTransition()
   useState(config);
 
   const initialValues =
@@ -117,7 +121,22 @@ const TransformationForm = ({
     },1000);
   };
 
-  const onTransformHandler = () => {};
+  // image handler
+  // :TODO: Return to update credits
+  const onTransformHandler = async () => {
+   setIsTransforming(true);
+// merges all keys both objects to ensure both 
+// of them end up in new obj - transformationConfig 
+   setIsTransformationConfig(
+    deepMergeObjects(newTransformation, transformationConfig)
+   )
+
+   setNewTransformation(null);
+
+   startTransition(async () => {
+    // await updateCredits(userId, creditFee)
+   })
+  };
 
   return (
     <div>
