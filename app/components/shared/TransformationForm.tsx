@@ -31,7 +31,7 @@ import {
   transformationTypes,
 } from "@/constants";
 import { CustomField } from "./CustomField";
-import { AspectRatioKey } from "@/lib/utils";
+import { AspectRatioKey, debounce } from "@/lib/utils";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -103,7 +103,19 @@ const TransformationForm = ({
     value: string,
     type: string,
     onChangeField: (value: string) => void
-  ) => {};
+  ) => {
+    // set timer to limit function calls to server 
+    debounce(()=>{
+      setNewTransformation((prevState: any) => ({
+        ...prevState,
+        [type]: {
+          ...prevState?.[type],
+          [fieldName === 'prompt' ? 'prompt' : 'to']: value
+        }
+      }))
+      return onChangeField(value)
+    },1000);
+  };
 
   const onTransformHandler = () => {};
 
