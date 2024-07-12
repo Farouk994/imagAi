@@ -34,6 +34,7 @@ import { CustomField } from "./CustomField";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
 import MediaUploader from "./MediaUploader";
+import TransformedImage from "./TransformedImage";
 
 // specify different form validations
 export const formSchema = z.object({
@@ -59,7 +60,7 @@ const TransformationForm = ({
     useState<Transformations | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
-  const [transformationConfig, setIsTransformationConfig] = useState(false);
+  const [transformationConfig, setIsTransformationConfig] = useState(config);
   // update state without blocking UI
   const [isPending, startTransition] = useTransition();
   useState(config);
@@ -243,6 +244,14 @@ const TransformationForm = ({
                   type={type}
                 />
               )}
+            />
+            <TransformedImage
+              image={image}
+              type={type}
+              transformationConfig={transformationConfig}
+              title={form.getValues().title}
+              setIsTransforming={setIsTransforming}
+              isTransforming={isTransforming}
             />
           </div>
 
