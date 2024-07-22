@@ -53,7 +53,7 @@ const TransformedImage = ({
             <div className="transforming-loader">
               <Image
                 src="/assets/icons/spinner.svg"
-                alt="Transforming"
+                alt="spinner"
                 width={50}
                 height={50}
               />

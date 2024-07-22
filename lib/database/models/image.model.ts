@@ -3,16 +3,16 @@ import { Document, model, models, Schema } from "mongoose";
 
 import { Types } from "mongoose";
 
-export interface IImage extends Document {
+export interface Image extends Document {
     title: string;
     transformation: string;
     publicId: string;
-    secureId: string;
+    secureURL: string;
     width?: number;
     height?: number;
     config?: object;
-    transformationUrl?: string;
-    aspectRatio?: number;
+    transformationURL?: string;
+    aspectRatio?: string;
     color?: string;
     prompt?: string;
     author: {
@@ -25,15 +25,15 @@ export interface IImage extends Document {
 }
 
 const ImageSchema = new Schema({
-  title: { type: String, required: true },
-  transformation: { type: String, required: true },
+  title: { type: String, required: false },
+  transformation: { type: String, required: false },
   publicId: { type: String, required: true },
-  secureId: { type: String, required: true },
+  secureURL: { type: String, required: true },
   width: { type: Number },
   height: { type: Number },
   config: { type: Object },
   transformationUrl: { type: String },
-  aspectRatio: { type: Number },
+  aspectRatio: { type: String },
   color: { type: String },
   prompt: { type: String },
   author: { type: Schema.Types.ObjectId, ref: "User" },
