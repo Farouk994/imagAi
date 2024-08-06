@@ -3,8 +3,14 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Collection } from "../components/shared/Collection";
+import { getAllImages } from "@/lib/actions/image.actions";
 
-const TransformationsPage = () => {
+const TransformationsPage = async ({ searchParams }: SearchParamProps) => {
+  const page = Number(searchParams?.page) || 1;
+  const searchQuery = (searchParams?.query as string) || '';
+
+  const images = await getAllImages({page, searchQuery})
   return (
     <>
       <section className="home">
@@ -25,6 +31,13 @@ const TransformationsPage = () => {
             </Link>
           ))}
         </ul>
+      </section>
+      <section className="sm:m-12">
+        <Collection hasSearch={true}
+          images={images?.data}
+          totalPages={images?.totalPage}
+          page={page}
+        />
       </section>
     </>
   );

@@ -101,6 +101,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
   try {
     await connectToDatabase();
 
+    // set up cloudinary instance
     cloudinary.config({
       cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_API_KEY,
@@ -108,6 +109,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       secure: true,
     })
 
+    // images will be saved in this folder
     let expression = 'folder=imaginify';
 
     if (searchQuery) {
@@ -130,10 +132,11 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       }
     }
 
+    // populate cards on page (number)
     const skipAmount = (Number(page) -1) * limit;
 
     const images = await populateUser(Image.find(query))
-      .sort({ updatedAt: -1 })
+      .sort({ updatedAt: -1 }) // new images in order
       .skip(skipAmount)
       .limit(limit);
     
