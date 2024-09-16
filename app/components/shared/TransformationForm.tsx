@@ -116,7 +116,7 @@ const TransformationForm = ({
         secureURL: image?.secureURL,
         transformationURL: transformationUrl,
       };
-      console.log('imageData', imageData)
+      console.log("imageData", imageData);
       if (action === "Add") {
         try {
           const newImage = await addImage({
@@ -126,8 +126,8 @@ const TransformationForm = ({
           });
           if (newImage) {
             form.reset();
-            setImage(data)
-            router.push(`/transformations/${newImage._id}`)
+            setImage(data);
+            router.push(`/transformations/${newImage._id}`);
           }
         } catch (err) {
           console.log(err);
@@ -148,7 +148,7 @@ const TransformationForm = ({
         }
       }
     }
-    setIsSubmitting(false)
+    setIsSubmitting(false);
     console.log(values);
   }
 
@@ -201,23 +201,23 @@ const TransformationForm = ({
     setNewTransformation(null);
 
     startTransition(async () => {
-      await updateCredits(userId, creditFee)
+      await updateCredits(userId, creditFee);
     });
   };
 
   // using this because we only have a single field for restore and remove
   // bcz we have a single field
-  useEffect(()=>{
-    if(image && type === 'restore' || type === 'removeBackground'){
-      setNewTransformation(transformationType.config)
+  useEffect(() => {
+    if ((image && type === "restore") || type === "removeBackground") {
+      setNewTransformation(transformationType.config);
     }
-  },[image, transformationType.config, type])
+  }, [image, transformationType.config, type]);
 
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal/>}
+          {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
           <CustomField
             control={form.control}
             name="title"
@@ -352,4 +352,3 @@ const TransformationForm = ({
 };
 
 export default TransformationForm;
-
