@@ -342,7 +342,7 @@ const TransformationForm = ({
               disabled={isSubmitting}
               onClick={onTransformHandler}
             >
-              {isSubmitting ? "Submitting...." : "Save"}
+              {isSubmitting ? "Submitting..." : "Save"}
             </Button>
           </div>
         </form>
