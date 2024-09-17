@@ -144,7 +144,7 @@ const TransformationForm = ({
             router.push(`/transformations/${updatedImage._id}`);
           }
         } catch (err) {
-          console.log(err);
+          console.log("err",err);
         }
       }
     }
