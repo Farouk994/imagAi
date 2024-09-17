@@ -149,7 +149,7 @@ const TransformationForm = ({
       }
     }
     setIsSubmitting(false);
-    console.log(values);
+    console.log("values",values);
   }
 
   const onSelectFieldHandler = (
