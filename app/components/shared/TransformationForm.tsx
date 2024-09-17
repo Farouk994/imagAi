@@ -189,7 +189,7 @@ const TransformationForm = ({
   };
 
   // image handler
-  // :TODO: Return to update credits
+  // :TODO: Return to update credits__
   const onTransformHandler = async () => {
     setIsTransforming(true);
     // merges all keys both objects to ensure both
@@ -342,7 +342,7 @@ const TransformationForm = ({
               disabled={isSubmitting}
               onClick={onTransformHandler}
             >
-              {isSubmitting ? "Submitting..." : "Save"}
+              {isSubmitting ? "Submitting...." : "Save"}
             </Button>
           </div>
         </form>
