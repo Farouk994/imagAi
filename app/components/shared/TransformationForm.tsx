@@ -127,6 +127,7 @@ const TransformationForm = ({
           if (newImage) {
             form.reset();
             setImage(data);
+            console.log("setData",setImage(data));
             router.push(`/transformations/${newImage._id}`);
           }
         } catch (err) {
