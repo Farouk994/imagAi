@@ -116,7 +116,7 @@ const TransformationForm = ({
         secureURL: image?.secureURL,
         transformationURL: transformationUrl,
       };
-      console.log("imageData", imageData);
+      console.log("imageData===>", imageData);
       if (action === "Add") {
         try {
           const newImage = await addImage({
