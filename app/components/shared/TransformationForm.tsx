@@ -130,7 +130,7 @@ const TransformationForm = ({
             router.push(`/transformations/${newImage._id}`);
           }
         } catch (err) {
-          console.log("error",err);
+          console.log("error", err);
         }
       }
       if (action === "Update") {
@@ -144,12 +144,12 @@ const TransformationForm = ({
             router.push(`/transformations/${updatedImage._id}`);
           }
         } catch (err) {
-          console.log("err",err);
+          console.log("err", err);
         }
       }
     }
     setIsSubmitting(false);
-    console.log("values",values);
+    console.log("values", values);
   }
 
   const onSelectFieldHandler = (
