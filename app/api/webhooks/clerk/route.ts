@@ -4,12 +4,29 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
+import stripe from "stripe";
 
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
+  const body = await req.text();
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  
+  // stripe connect
+  const sig = req.headers.get("stripe-signature") as string;
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  
+  let event;
+  
+  try {
+    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+  } catch (err) {
+    return NextResponse.json({ message: "Webhook error", error: err });
+  }
+
+  // Get the ID and type
+  // const eventType = event.type;
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
@@ -32,7 +49,7 @@ export async function POST(req: Request) {
 
   // Get the body
   const payload = await req.json();
-  const body = JSON.stringify(payload);
+  // const body = JSON.stringify(payload);
 
   // Create a new Svix instance with your secret.
   const wh = new Webhook(WEBHOOK_SECRET);
