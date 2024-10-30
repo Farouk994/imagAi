@@ -35,6 +35,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
+        <title>Imaginify</title> 
         <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
           {children}
         </body>
