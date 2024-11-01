@@ -6,6 +6,7 @@ import { handleError } from '../utils';
 import { connectToDatabase } from '../database/mongoose';
 import Transaction from '../database/models/transaction.model';
 import { updateCredits } from './user.actions';
+import { v2 as cloudinary } from 'cloudinary'
 
 export async function checkoutCredits(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -41,6 +42,12 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
 export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
+    cloudinary.config({
+      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true,
+    })
 
     // Create a new transaction with a buyerId
     const newTransaction = await Transaction.create({
