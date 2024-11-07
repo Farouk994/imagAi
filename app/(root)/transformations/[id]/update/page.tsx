@@ -18,11 +18,12 @@ const Page = async ({ params: { id } }: SearchParamProps) => {
   const transformation =
     transformationTypes[image.transformationType as TransformationTypeKey];
 
-    console.log('transformationType', transformation);
+    console.log('transformationType=======>', transformation);
 
   return (
     <>
-      <Header title={transformation.title} subtitle={transformation.subTitle} />
+      {/* <Header title={transformation.title} subtitle={transformation.subTitle} /> */}
+      {console.log("=========>",transformation)}
 
       <section className="mt-10">
         <TransformationForm
