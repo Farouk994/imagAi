@@ -32,7 +32,7 @@ const MediaUploader = ({
       height: result?.info?.height,
       secureURL: result?.info?.secure_url,
     }));
-    onValueChange(result?.info?.public_id)
+    onValueChange(result?.info?.public_id);
     toast({
       title: "Image Upload was a success",
       description: "1 credit was deducted",
@@ -50,19 +50,19 @@ const MediaUploader = ({
     });
   };
   return (
-      <CldUploadWidget
-        uploadPreset="imaginify"
-        options={{
-          multiple: false,
-          resourceType: "image",
-        }}
-        onSuccess={onUploadSuccessHandler}
-        onError={onUploadErrorHandler}
-      >
-        {({ open }) => (
-          <div className="flex flex-col gap-4">
-            <h3 className="h3-bold text-dark-600">Original</h3>
-            {publicId ? (
+    <CldUploadWidget
+      uploadPreset="imaginify"
+      options={{
+        multiple: false,
+        resourceType: "image",
+      }}
+      onSuccess={onUploadSuccessHandler}
+      onError={onUploadErrorHandler}
+    >
+      {({ open }) => (
+        <div className="flex flex-col gap-4">
+          <h3 className="h3-bold text-dark-600">Original</h3>
+          {publicId ? (
             <>
               <div className="overflow-hidden cursor-pointer round-[10px]">
                 <CldImage
@@ -73,25 +73,25 @@ const MediaUploader = ({
                   sizes={"(max-width: 76px) 100vw, 50vw"}
                   placeholder={dataUrl as PlaceholderValue}
                   className="media-uploader_cldImage"
-                  />
+                />
               </div>
             </>
-            ) : (
-              <div className="media-uploader_cta" onClick={() => open()}>
-                <div className="media-uploader_cta-image">
-                  <Image
-                    src="/assets/icons/add.svg"
-                    width={24}
-                    height={24}
-                    alt="Add image"
-                  />
-                </div>
-                <p className="p-14-medium">Click here to Upload Image</p>
+          ) : (
+            <div className="media-uploader_cta" onClick={() => open()}>
+              <div className="media-uploader_cta-image">
+                <Image
+                  src="/assets/icons/add.svg"
+                  width={24}
+                  height={24}
+                  alt="Add image"
+                />
               </div>
-            )}
-          </div>
-        )}
-      </CldUploadWidget>
+              <p className="p-14-medium">Click here to Upload Image</p>
+            </div>
+          )}
+        </div>
+      )}
+    </CldUploadWidget>
   );
 };
 
